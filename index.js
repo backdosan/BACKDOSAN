@@ -7,8 +7,8 @@ const momenttz = require('moment-timezone');
 const MessageAdd = require('./db/message_add.js')
 const welcomeChannelName = "안녕하세요";
 const byeChannelName = "안녕히가세요";
-const welcomeChannelComment = "어서오세요.";
-const byeChannelComment = "안녕히가세요.";
+const welcomeChannelComment = "어서오세요! 여긴 코드 네임이라는 채널입니다. 좋은 하루 보내세요.";
+const byeChannelComment = "가 나갔습니다.";
 
 client.on('ready', () => {
   console.log('켰다.');
@@ -22,7 +22,7 @@ client.on("guildMemberAdd", (member) => {
 
   welcomeChannel.send(`<@${newUser.id}> ${welcomeChannelComment}\n`);
 
-  member.addRole(guild.roles.find(role => role.name == "게스트"));
+  member.addRole(guild.roles.find(role => role.name == "player"));
 });
 
 client.on("guildMemberRemove", (member) => {
@@ -41,17 +41,27 @@ client.on('message', (message) => {
   MessageSave(message)
   if(message.author.bot) return;
 
-  if(message.content == 'ping') {
-    return message.reply('pong');
+  if(message.content == '!조무근2') {
+    return message.reply('바보라고 시켰습니다.');
   }
-
+  if(message.content == '!조무근') {
+    return message.reply('조무근님은 방장입니다. 소문으로는 서버 관리를 안한다고 합니다.');
+  }
+  if(message.content == '!영화하네') {
+    return message.reply('영화하네님은 방장은 아니지만 서버를 가장 많이 관리합니다.');
+  }
+  if(message.content == '!박지원') {
+    return message.reply('매우 평범한 player입니다.');
+  }
+  if(message.content == '!자기소개') {
+    return message.reply('안녕하세요. 저는 영화하네님이 직접 만든 봇입니다. 이 서버의 거의 모든 것을 관리합니다. 봇들이 오류가 났을 떄는 가끔 고쳐주기도 하죠.');
+  }
   if(message.content == '!si') {
     let embed = new Discord.RichEmbed()
-    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
     var duration = moment.duration(client.uptime).format(" D [일], H [시간], m [분], s [초]");
     embed.setColor('#186de6')
-    embed.setAuthor('server info of 콜라곰 BOT', img)
-    embed.setFooter(`콜라곰 BOT ❤️`)
+    embed.setAuthor('server info of bluego', img)
+    embed.setFooter(`조무근 똥멍청이`)
     embed.addBlankField()
     embed.addField('RAM usage',    `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true);
     embed.addField('running time', `${duration}`, true);
@@ -77,11 +87,8 @@ client.on('message', (message) => {
   }
 
   if(message.content == 'embed') {
-    let img = 'https://cdn.discordapp.com/icons/419671192857739264/6dccc22df4cb0051b50548627f36c09b.webp?size=256';
     let embed = new Discord.RichEmbed()
       .setTitle('타이틀')
-      .setURL('http://www.naver.com')
-      .setAuthor('나긋해', img, 'http://www.naver.com')
       .setThumbnail(img)
       .addBlankField()
       .addField('Inline field title', 'Some value here')
@@ -91,7 +98,7 @@ client.on('message', (message) => {
       .addField('Inline field title', 'Some value here1\nSome value here2\nSome value here3\n')
       .addBlankField()
       .setTimestamp()
-      .setFooter('나긋해가 만듬', img)
+      .setFooter('영화하네가 만듬', img)
 
     message.channel.send(embed)
   } else if(message.content == '!help') {
@@ -108,9 +115,9 @@ client.on('message', (message) => {
     ];
     let commandStr = '';
     let embed = new Discord.RichEmbed()
-      .setAuthor('Help of 콜라곰 BOT', helpImg)
+      .setAuthor('Help of bluego', helpImg)
       .setColor('#186de6')
-      .setFooter(`콜라곰 BOT ❤️`)
+      .setFooter(`조무근 멍청이`)
       .setTimestamp()
     
     commandList.forEach(x => {
@@ -150,9 +157,9 @@ client.on('message', (message) => {
     if(message.member != null) { // 채널에서 공지 쓸 때
       let contents = message.content.slice('!전체공지2'.length);
       let embed = new Discord.RichEmbed()
-        .setAuthor('공지 of 콜라곰 BOT')
+        .setAuthor('공지 of 마냥')
         .setColor('#186de6')
-        .setFooter(`콜라곰 BOT ❤️`)
+        .setFooter(`조무근 바보`)
         .setTimestamp()
   
       embed.addField('공지: ', contents);
